@@ -5,7 +5,7 @@ site_author: Remko de Knikker
 
 # Repository
 repo_name: appmod101
-repo_url: https://remkohdev.github.io/appmod101
+repo_url: https://github.com/remkohdev/appmod101
 edit_uri: edit/main/docs
 docs_dir: docs
 
