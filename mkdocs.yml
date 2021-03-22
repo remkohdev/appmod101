@@ -1,0 +1,116 @@
+# Project information
+site_name: App Mod Introduction Workshop
+site_url: https://remkohdev.github.io/appmod101
+site_author: Remko de Knikker
+
+# Repository
+repo_name: appmod101
+repo_url: https://remkohdev.github.io/appmod101
+edit_uri: edit/master/docs
+
+# Navigation
+nav:
+  - Welcome:
+    - Workshop Overview: README.md
+  - Environment Setup:
+    - IBM Cloud Account: generatedContent/workshop-setup/NEWACCOUNT.md
+    - Docker Hub Account: generatedContent/workshop-setup/DOCKERHUB.md
+    - Grant OpenShift Cluster: generatedContent/workshop-setup/GRANTCLUSTER.md
+    - Connect to ROKS: generatedContent/workshop-setup/ROKS.md
+    - Play-with-Docker Shell: generatedContent/workshop-setup/PLAYWITHDOCKER.md
+    - IBM Cloud Shell: generatedContent/workshop-setup/CLOUDSHELL.md
+    - Helm v3: generatedContent/workshop-setup/HELM.md
+  - Docker 101:
+    - Lab 1. Deploy your first application: generatedContent/docker101/lab-1/README.md
+    - Lab 2. Scale and update deployments: generatedContent/docker101/lab-2/README.md
+    - Lab 3. Build multi-tier applications: generatedContent/docker101/lab-3/README.md
+  - Kube 101:
+    - Lab 1. Deploy your first application: generatedContent/kube101/Lab1/README.md
+    - Lab 2. Scale and update deployments: generatedContent/kube101/Lab2/README.md
+    - Lab 3. Build multi-tier applications: generatedContent/kube101/Lab3/README.md
+  - Helm 101:
+    - Lab 1. Deploy with Helm: generatedContent/helm101/Lab1/README.md
+    - Lab 2. Make changes with Helm: generatedContent/helm101/Lab2/README.md
+    - Lab 3. Keeping track of the deployed application: generatedContent/helm101/Lab3/README.md
+    - Lab 4. Share Helm Charts: generatedContent/helm101/Lab4/README.md   
+
+## DO NOT CHANGE BELOW THIS LINE
+
+# Copyright
+copyright: Copyright &copy; 2021 IBM Developer
+
+# Theme
+theme:
+  name: material
+  font:
+    text: IBM Plex Sans
+    code: IBM Plex Mono
+  icon:
+    logo: material/library
+  features:
+    - navigation.tabs
+    #- navigation.instant
+    - navigation.indexes
+  palette:
+    scheme: default
+    primary: black
+    accent: blue
+  icon:
+    repo: fontawesome/brands/github
+
+# Plugins
+plugins:
+  - search
+
+# Customization
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/ibm
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/ibmdeveloper
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/company/ibm/
+    - icon: fontawesome/brands/youtube
+      link: https://www.youtube.com/user/developerworks
+    - icon: fontawesome/brands/dev
+      link: https://dev.to/ibmdeveloper
+  version:
+    method: mike
+
+# Extensions
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - meta
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets:
+      check_paths: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
