@@ -15,7 +15,7 @@ Each topic in this workshop consists of a technical overview and a hands-on lab.
 | SESSION 2  |  |  |
 | :--- | :--- | :--- |
 | [Lecture: Overview of Kubernetes](pdfs/Overview-of-Kubernetes.pdf)  | Remko de Knikker | 30 mins |
-| [Lab: Kubernetes 101](docs/generatedContent/kube101/Lab1/README.md) | Remko de Knikker | 60 mins |
+| [Lab: Kubernetes 101](docs/generatedContent/kube101/lab-1/README.md) | Remko de Knikker | 60 mins |
 
 | SESSION 3  |  |  |
 | :--- | :--- | :--- |
