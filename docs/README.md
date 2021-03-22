@@ -16,7 +16,7 @@ Each topic in this workshop consists of a technical overview and a hands-on lab.
 | :--- | :--- | :--- |
 | Welcome - Introduction | All | 10 mins |
 | [Lecture: Overview of Docker](pdfs/Overview-of-Containers.pdf) | Remko de Knikker | 30 mins |
-| [Lab: Docker 101](generatedContent/docker101/Lab1/README.md) | Remko de Knikker | 60 mins |
+| [Lab: Docker 101](generatedContent/docker101/lab-1/README.md) | Remko de Knikker | 60 mins |
 
 | SESSION 2  |  |  |
 | :--- | :--- | :--- |
