@@ -16,7 +16,8 @@ We will be using a few Docker commands in this lab. For full documentation on av
 
 ### Prerequisites
 
-Completed Lab 0: You must have access to a docker client, either on localhost, use a terminal from `Theia - Cloud IDE` at [https://labs.cognitiveclass.ai/tools/theiadocker](https://labs.cognitiveclass.ai/tools/theiadocker) or be using [Play with Docker](http://play-with-docker.com) for example.
+* Docker Hub account,
+* Access to a client terminal with Docker daemon, [Play with Docker](http://play-with-docker.com) or localhost.
 
 ## Get Started
 
