@@ -53,12 +53,6 @@ Management Commands:
 
 The Docker command line can be used to manage several features of the Docker Engine. In this lab, we will mainly focus on the `container` command.
 
-If `podman` is installed, you can run the alternative command for comparison.
-
-```sh
-sudo podman -h
-```
-
 You can additionally review the version of your Docker installation,
 
 ```sh
@@ -74,16 +68,7 @@ Server: Docker Engine - Community
     ...
 ```
 
-You note that Docker installs both a `Client` and a `Server: Docker Engine`. For instance, if you run the same command for podman, you will see only a CLI version, because podman runs daemonless and relies on an OCI compliant container runtime (runc, crun, runv etc) to interface with the OS to create the running containers.
-
-```sh
-sudo podman version --events-backend=none
-Version:      2.1.1
-API Version:  2.0.0
-Go Version:   go1.15.2
-Built:        Thu Jan  1 00:00:00 1970
-OS/Arch:      linux/amd64
-```
+You note that Docker installs both a `Client` and a `Server: Docker Engine`.
 
 ## Step 1: Run your first container
 
@@ -131,7 +116,7 @@ We are going to use the Docker CLI to run our first container.
 
     The `docker container exec` command is a way to "enter" a running container's namespaces with a new process.
 
-    Open a new terminal. On cognitiveclass.ai, select `Terminal` > `New Terminal`.
+    Open a new terminal.
 
     Using play-with-docker.com, to open a new terminal connected to node1, click "Add New Instance" on the lefthand side, then ssh from node2 into node1 using the IP that is listed by 'node1  '. For example:
 

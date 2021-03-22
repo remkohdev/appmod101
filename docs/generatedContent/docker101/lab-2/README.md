@@ -194,7 +194,13 @@ Now that you have built the image, you can run it to see that it works.
 
 1. Navigate to [localhost:5001](http://localhost:5001) in a browser to see the results.
 
-    In a terminal run `curl localhost:5001`, which returns `hello world!`.
+    In a terminal run,
+
+    ```bash
+    curl localhost:5001
+    ```
+
+    which returns `hello world!`.
 
     If you are using katacoda, click on the link in the left-hand pane that says: `View port at https://....environments.katacoda.com` then type in 5001 and click `Display Port`.
 
@@ -250,7 +256,7 @@ Now that you have built the image, you can run it to see that it works.
     The Docker Hub naming convention is to tag your image with [dockerhub username]/[image name]. To do this, we are going to tag our previously created image `python-hello-world` to fit that format.
 
     ```sh
-    docker tag python-hello-world $DOCKERHUB_USERNAME/python-hello-world
+    docker tag python-hello-world $DOCKERHUB_USERNAME/python-hello-world:1.0.0
     ```
 
 1. Push your image to the registry
@@ -258,7 +264,7 @@ Now that you have built the image, you can run it to see that it works.
     Once we have a properly tagged image, we can use the `docker push` command to push our image to the Docker Hub registry.
 
     ```sh
-    $ docker push $DOCKERHUB_USERNAME/python-hello-world
+    $ docker push $DOCKERHUB_USERNAME/python-hello-world:1.0.0
     The push refers to a repository [docker.io/jzaccone/python-hello-world]
     2bce026769ac: Pushed
     64d445ecbe93: Pushed
@@ -277,6 +283,20 @@ Now that you have built the image, you can run it to see that it works.
     Now that your image is on Docker Hub, other developers and operations can use the `docker pull` command to deploy your image to other environments.
 
     **Note:** Docker images contain all the dependencies that it needs to run an application within the image. This is useful because we no longer have deal with environment drift (version differences) when we rely on dependencies that are install on every environment we deploy to. We also don't have to go through additional steps to provision these environments. Just one step: install docker, and you are good to go.
+
+1. Run from Docker Hub,
+
+    ```bash
+    docker run -p 5001:5000 -d $DOCKERHUB_USERNAME/python-hello-world:1.0.0
+    ```
+
+1. In a terminal run,
+
+    ```bash
+    curl localhost:5001
+    ```
+
+    which should return `hello world!` again.
 
 ## Step 5: Deploying a Change
 
