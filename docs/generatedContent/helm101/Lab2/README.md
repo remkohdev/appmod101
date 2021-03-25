@@ -1,38 +1,18 @@
 # Lab 2. Make changes with Helm
 
-In [Lab 1](../Lab1/README.md), we installed the guestbook sample app by using Helm and saw the benefits over using `kubectl`. You probably think that you're done and know enough to use Helm. But what about updates or improvements to the chart? How do you update your running app to pick up these changes?
+In [Lab 1](../Lab1/README.md), we installed the guestbook sample app by using Helm and saw the benefits over using `kubectl`.
 
 In this lab, we're going to look at how to update our running app when the chart has been changed. To demonstrate this, we're going to make changes to the original `guestbook` chart by:
 
-* Removing the Redis slaves and using just the in-memory DB
 * Changing the type from `LoadBalancer` to `NodePort`.
-
-It seems contrived but the goal of this lab is to show you how to update your apps with Kubernetes and Helm. So, how easy is it to do this? Let's take a look below.
 
 ## Scenario 1: Update the application using `kubectl`
 
-In this part of the lab we will update the previously deployed application [Guestbook](https://github.com/IBM/guestbook), using Kubernetes directly.
+In this part of the lab we will update the previously deployed application [Guestbook](https://github.com/IBM/guestbook), using Kubernetes directly. 
 
-1. This is an **optional** step that is not technically required to update your running app. The reason for doing this step is "house keeping" - you want to have the correct files for the current configuration that you have deployed. This avoids making mistakes if you have future updates or even rollbacks. In this updated configuration, we remove the Redis slaves. To have the directory match the configuration, move/archive or simply remove the Redis slave files from the guestbook repo tree:
+**Do NOT run the commands**, but just review the commands to see how it would be done without Helm.
 
-   ``` console
-   cd guestbook/v1
-   rm redis-slave-service.yaml
-   rm redis-slave-deployment.yaml
-   ```
-
-   > Note: you can reclaim these files later with a `git checkout -- <filename>` command, if desired
-
-1. Delete the Redis slave service and pods:
-
-   ```console
-   $ kubectl delete svc redis-slave --namespace default
-   service "redis-slave" deleted
-   $ kubectl delete deployment redis-slave --namespace default
-   deployment.extensions "redis-slave" deleted
-   ```
-
-1. Update the guestbook service from `LoadBalancer` to `NodePort` type:
+1. To update a guestbook service from `LoadBalancer` to `NodePort` type not using Helm, you need to change the `guestbook-service.yaml` spec:
 
    ```console
    sed -i.bak 's/LoadBalancer/NodePort/g' guestbook-service.yaml
@@ -43,23 +23,23 @@ In this part of the lab we will update the previously deployed application [Gues
 1. Delete the guestbook service:
 
    ```console
-   kubectl delete svc guestbook --namespace default
+   oc delete svc guestbook
    ```
 
 1. Re-create the service with `NodePort` type:
 
    ```console
-   kubectl create -f guestbook-service.yaml
+   oc create -f guestbook-service.yaml
    ```
 
 1. Check the updates, using
 
    ```console
-   kubectl get all --namespace default
+   oc get all
    ```
 
    ```console
-   $ kubectl get all --namespace default
+   $ oc get all
    NAME                                READY     STATUS    RESTARTS   AGE
    pod/guestbook-v1-7fc76dc46-9r4s7    1/1       Running   0          1h
    pod/guestbook-v1-7fc76dc46-hspnk    1/1       Running   0          1h
@@ -87,7 +67,7 @@ In this part of the lab we will update the previously deployed application [Gues
    Get the public IP of one of your nodes:
 
    ```console
-   kubectl get nodes -o wide
+   oc get nodes -o wide
    ```
 
    Navigate to the IP address plus the node port that printed earlier.
@@ -99,7 +79,9 @@ In this section, we'll update the previously deployed `guestbook-demo` applicati
 Before we start, let's take a few minutes to see how Helm simplifies the process compared to using Kubernetes directly. Helm's use of a [template language](https://helm.sh/docs/chart_template_guide/getting_started/) provides great flexibility and power to chart authors, which removes the complexity to the chart user. In the guestbook example, we'll use the following capabilities of templating:
 
 * Values: An object that provides access to the values passed into the chart. An example of this is in `guestbook-service`, which contains the line `type: {{ .Values.service.type }}`. This line provides the capability to set the service type during an upgrade or install.
-* Control structures: Also called “actions” in template parlance, control structures provide the template author with the ability to control the flow of a template’s generation. An example of this is in `redis-slave-service`, which contains the line `{{- if .Values.redis.slaveEnabled -}}`. This line allows us to enable/disable the REDIS master/slave during an upgrade or install.
+* Control structures: Also called “actions” in template parlance, control structures provide the template author with the ability to control the flow of a template’s generation. 
+
+An example of a control structure is in the example below, which contains the line `{{- if .Values.redis.slaveEnabled -}}`. This line allows us to enable/disable the REDIS master/slave during an upgrade or install.
 
 The complete `redis-slave-service.yaml` file shown below, demonstrates how the file becomes redundant when the `slaveEnabled` flag is disabled and also how the port value is set. There are more examples of templating functionality in the other chart files.
 
@@ -145,7 +127,7 @@ Enough talking about the theory. Now let's give it a go!
     ```console
     $ cd helm101/charts
 
-    $ helm upgrade guestbook-demo ./guestbook --set redis.slaveEnabled=false,service.type=NodePort --namespace helm-demo
+    $ helm upgrade guestbook-demo ./guestbook --set service.type=NodePort
     Release "guestbook-demo" has been upgraded. Happy Helming!
     ...
     ```
@@ -153,10 +135,10 @@ Enough talking about the theory. Now let's give it a go!
     A Helm upgrade takes an existing release and upgrades it according to the information you provide. You should see output similar to the following:
 
     ```console
-    $ helm upgrade guestbook-demo ./guestbook --set redis.slaveEnabled=false,service.type=NodePort --namespace helm-demo
+    $ helm upgrade guestbook-demo ./guestbook --set service.type=NodePort
     Release "guestbook-demo" has been upgraded. Happy Helming!
     NAME: guestbook-demo
-    LAST DEPLOYED: Tue Feb 25 14:23:27 2020
+    LAST DEPLOYED: Thu Mar 25 21:41:01 2021
     NAMESPACE: helm-demo
     STATUS: deployed
     REVISION: 2
@@ -168,9 +150,9 @@ Enough talking about the theory. Now let's give it a go!
       echo http://$NODE_IP:$NODE_PORT
     ```
 
-    The `upgrade` command upgrades the app to a specified version of a chart, removes the `redis-slave` resources, and updates the app `service.type` to `NodePort`.
+    The `upgrade` command upgrades the app to a specified version of a chart, updates the app `service.type` to `NodePort`.
 
-    Check the updates, using `kubectl get all --namespace helm-demo`:
+    Check the updates, using `oc get all`:
 
     ```console
     $ kubectl get all --namespace helm-demo
@@ -193,9 +175,9 @@ Enough talking about the theory. Now let's give it a go!
 
     ```
 
-    > Note: The service type has changed (to `NodePort`) and a new port has been allocated (`31202` in this output case) to the guestbook service. All `redis-slave` resources have been removed.
+    > Note: The service type has changed (to `NodePort`) and a new port has been allocated (`31202` in this output case) to the guestbook service.
 
-    When you check the Helm release with `helm list -n helm-demo`, you will see the revision and date has been updated:
+    When you check the Helm release with `helm list`, you will see the revision and date has been updated:
 
     ```console
     $ helm list -n helm-demo
@@ -208,7 +190,14 @@ Enough talking about the theory. Now let's give it a go!
    Get the public IP of one of your nodes:
 
    ```console
-   kubectl get nodes -o wide
+   oc get nodes -o wide
+   ```
+
+   Set the environment variable for EXTERNAL_IP,
+
+   ```bash
+   EXTERNAL_IP=<node externalip>
+   curl http://$EXTERNAL_IP:$NODEPORT/rpush/guestbook/hi3
    ```
 
    Navigate to the IP address plus the node port that printed earlier.

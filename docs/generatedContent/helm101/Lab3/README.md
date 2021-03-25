@@ -63,35 +63,30 @@ Let's see how this works in practice.
     Check the rollback, using:
 
     ```console
-    kubectl get all --namespace helm-demo
+    oc get all
     ```
 
     ```console
-    $ kubectl get all --namespace helm-demo
-    NAME                                  READY   STATUS    RESTARTS   AGE
-    pod/guestbook-demo-6c9cf8b9-dhqk9     1/1     Running   0          20h
-    pod/guestbook-demo-6c9cf8b9-zddn      1/1     Running   0          20h
-    pod/redis-master-5d8b66464f-g7sh6     1/1     Running   0          20h
-    pod/redis-slave-586b4c847c-tkfj5      1/1     Running   0          5m15s
-    pod/redis-slave-586b4c847c-xxrdn      1/1     Running   0          5m15s
-
-    NAME                     TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-    service/guestbook-demo   LoadBalancer   172.21.43.244    <pending>     3000:31202/TCP   20h
-    service/redis-master     ClusterIP      172.21.12.43     <none>        6379/TCP         20h
-    service/redis-slave      ClusterIP      172.21.232.16    <none>        6379/TCP         5m15s
-
+    $ oc get all
+    NAME                                 READY   STATUS    RESTARTS   AGE
+    pod/guestbook-demo-95b976779-g54cs   1/1     Running   0          57m
+    pod/guestbook-demo-95b976779-xvkg2   1/1     Running   0          57m
+    pod/redis-master-7f5c9b648c-kbtvw    1/1     Running   0          57m
+    
+    NAME                     TYPE           CLUSTER-IP       EXTERNAL-IP    PORT(S)          AGE
+    service/guestbook-demo   LoadBalancer   172.21.203.237   169.46.30.43   3000:31741/TCP   57m
+    service/redis-master     ClusterIP      172.21.14.78     <none>         6379/TCP         57m
+    
     NAME                             READY   UP-TO-DATE   AVAILABLE   AGE
-    deployment.apps/guestbook-demo   2/2     2            2           20h
-    deployment.apps/redis-master     1/1     1            1           20h
-    deployment.apps/redis-slave      2/2     2            2           5m15s
-
-    NAME                                        DESIRED   CURRENT   READY   AGE
-    replicaset.apps/guestbook-demo-26c9cf8b9    2         2         2       20h
-    replicaset.apps/redis-master-5d8b66464f     1         1         1       20h
-    replicaset.apps/redis-slave-586b4c847c      2         2         2       5m15s
+    deployment.apps/guestbook-demo   2/2     2            2           57m
+    deployment.apps/redis-master     1/1     1            1           57m
+    
+    NAME                                       DESIRED   CURRENT   READY   AGE
+    replicaset.apps/guestbook-demo-95b976779   2         2         2       57m
+    replicaset.apps/redis-master-7f5c9b648c    1         1         1       57m
     ```
 
-    You can see from the output that the app service is the service type of `LoadBalancer` again and the Redis master/slave deployment has returned.
+    You can see from the output that the app service is the service type of `LoadBalancer` again.
     This shows a complete rollback from the upgrade in [Lab 2](../Lab2/README.md)
 
 ## Conclusion

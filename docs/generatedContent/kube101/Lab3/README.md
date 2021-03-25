@@ -138,15 +138,53 @@ The above configuration creates a Service resource named guestbook. A Service ca
   oc describe service guestbook
   ```
 
-  and
+- Create an environment variable for the Public IP and the NodePort,
 
-  ```shell 
-  oc get nodes -o wide
-  ```
+    ```bash
+    NODEPORT=<nodeport>
+    PUBLIC_IP=<EXTERNAL-IP>
+    ```
+
+
+- Now that you have both the address and the port, you can now access the application in the web browser
+   at `<EXTERNAL-IP>:<nodeport>`. In the example case this is `169.60.111.167:31208`.
+
+- Test the application,
+
+    ```bash
+    curl http://$PUBLIC_IP:$NODEPORT/rpush/guestbook/hi2
+    curl http://$PUBLIC_IP:$NODEPORT/lrange/guestbook
+    ```
+
+- In addition, on OpenShift, you can create a `Route` to expose your service. A Route is similar to an Ingress object with some additional features,
+
+    ```bash
+    oc expose service guestbook
+    ```
+
+- Describe the Route,
+
+    ```bash
+    oc describe route guestbook
+    ```
+
+- In consequence, you can access the service now using the `host` name instead of the External IP. Set an environment variable for host,
+
+    ```bash
+    HOST=<route host name>
+    NODEPORT=<nodeport of the service>
+    ```
+
+- Test the application,
+
+    ```bash
+    curl http://$HOST:$NODEPORT/rpush/guestbook/hi3
+    curl http://$HOST:$NODEPORT/lrange/guestbook
+    ```
 
 # 2. Connect to a back-end service.
 
-If you look at the guestbook source code, under the `guestbook/v1/guestbook` directory, you'll notice that it is written to support a variety of data stores. By default it will keep the log of guestbook entries in memory. 
+If you look at the guestbook source code, under the `guestbook/v1/guestbook` directory, you'll notice that it is written to support a variety of data stores. By default it will keep the log of guestbook entries in memory.
 
 That's ok for testing purposes, but as you get into a more "real" environment where you scale your application that model will not work because based on which instance of the application the user is routed to they'll see very different results.
 
