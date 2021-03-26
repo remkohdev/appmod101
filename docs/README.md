@@ -25,7 +25,8 @@ Each topic in this workshop consists of a technical overview and a hands-on lab.
 
 | SESSION 3  |  |  |
 | :--- | :--- | :--- |
-| [Lecture: Helm](pdfs/Overview-of-Helm-and-CICD.pdf) | Remko de Knikker | 30 mins |
+| [Lecture: CI/CD for Microservices](pdfs/CICD-for-Microservices.pdf) | Remko de Knikker | 30 mins |
+| [Lecture: Helm](pdfs/Overview-of-Helm-and-CICD.pdf) | Remko de Knikker | 20 mins |
 | [Lab: Helm 101](generatedContent/helm101/Lab1/README.md) |  Remko de Knikker | 60 mins |
 | Conclusion | All | |
 
